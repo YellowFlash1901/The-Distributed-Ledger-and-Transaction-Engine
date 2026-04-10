@@ -1,2 +1,3 @@
 gateway/app/__pycache__*
+gateway/.env
 .claude/*

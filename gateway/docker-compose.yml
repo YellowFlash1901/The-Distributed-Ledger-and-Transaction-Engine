@@ -7,3 +7,24 @@ services:
       - .:/gateway
     ports:
       - 8008:8000
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}                                                                                                                                      
+      POSTGRES_USER: ${POSTGRES_USER}                                                                                                                                              
+      POSTGRES_DB: ${POSTGRES_DB}  
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8081:8080
